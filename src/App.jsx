@@ -14,6 +14,8 @@ import Booking from "./component/services/bookings/Booking";
 import BookingDetails from "./component/services/bookings/BookingDetails";
 import { MyContext } from "./context/MyContext";
 import DashBoard from "./component/DashBoard";
+import Testimonials from "./component/Testimonials/Testimonials";
+import Transaction from "./component/Transaction/Transaction";
 function App() {
   const { role, setRole, navigate } = useContext(MyContext);
   const { pathname } = useLocation();
@@ -50,7 +52,8 @@ function App() {
                   <Route path="/services" element={<Services />} />
                   <Route path="/packages" element={<ServicePackage />} />
                   <Route path="/slot" element={<Slot />} />
-
+                  <Route path="/testimonials" element={<Testimonials />} />
+                  <Route path="/transactions" element={<Transaction/>}/>
                   <Route path="/users" element={<User />} />
                   <Route path="/bookings" element={<Booking />} />
                   <Route path="/booking-details" element={<BookingDetails />} />

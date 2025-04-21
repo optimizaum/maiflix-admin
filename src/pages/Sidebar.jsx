@@ -11,6 +11,8 @@ import { SiGoogleanalytics } from "react-icons/si";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import { IoSettings } from "react-icons/io5";
 import { IoMdLogOut } from "react-icons/io";
+import { BsChatQuoteFill } from "react-icons/bs";
+
 
 const Sidebar = () => {
   const location = useLocation();
@@ -82,13 +84,23 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink 
+          to="/testimonials" 
+          className={({ isActive }) => 
+            `flex items-center gap-3 p-3 rounded-lg ${
+              isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <GrTransaction /> Testimonials
+        </NavLink>
+
+        <NavLink 
           to="/transactions" 
           className={({ isActive }) => 
             `flex items-center gap-3 p-3 rounded-lg ${
               isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
             }`
           }>
-          <GrTransaction /> Transactions
+          <BsChatQuoteFill /> Transactions
         </NavLink>
 
         <NavLink 
