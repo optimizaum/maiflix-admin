@@ -1,5 +1,6 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom"; // Remove BrowserRouter here
+import React, { useContext, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom"; // Remove BrowserRouter here
+import Cookies from "js-cookie";
 
 import "./App.css";
 import Sidebar from "./pages/Sidebar";
@@ -7,32 +8,64 @@ import Header from "./pages/Header";
 import Services from "./component/services/servicesDetails/Services";
 import ServicePackage from "./component/services/packages/ServicePackage";
 import Slot from "./component/services/slot/Slot";
-import Login from "./pages/Login"; 
+import Login from "./pages/Login";
 import User from "./component/services/User";
-import Booking from "./component/services/bookings/Booking"; 
+import Booking from "./component/services/bookings/Booking";
 import BookingDetails from "./component/services/bookings/BookingDetails";
+import { MyContext } from "./context/MyContext";
+import DashBoard from "./component/DashBoard";
 function App() {
+  const { role, setRole, navigate } = useContext(MyContext);
+  const { pathname } = useLocation();
+  const token = localStorage.getItem("token");
+  console.log(token);
+
+  useEffect(() => {
+    if (token) {
+      setRole("admin");
+    }
+  }, [token]);
+  useEffect(() => {
+    if (token) {
+      if (pathname === "/login") {
+        navigate("/");
+      } else {
+        navigate(pathname);
+      }
+    } else {
+      navigate("/login");
+    }
+  }, []);
   return (
     <>
-   
-    <div className="flex flex-col h-screen">
-      
-      <Header />
-      <div className="flex flex-1">
-        <Sidebar />
-        <div className="flex-1 ">
-          <Routes> 
-            <Route path="/services" element={<Services />} />
-            <Route path="/packages" element={<ServicePackage />} />
-            <Route path="/slot" element={<Slot />} />
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/users" element={<User/>}/>
-            <Route path="/bookings" element={<Booking/>}/>
-            <Route path="/booking-details" element={<BookingDetails/>}/>
-          </Routes>
-        </div>
-      </div>
-    </div>
+      <section>
+        {role === "admin" ? (
+          <div className="flex flex-col h-screen">
+            <Header />
+            <div className="flex flex-1">
+              <Sidebar />
+              <div className="flex-1 ">
+                <Routes>
+                  <Route path="/" element={<DashBoard />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/packages" element={<ServicePackage />} />
+                  <Route path="/slot" element={<Slot />} />
+
+                  <Route path="/users" element={<User />} />
+                  <Route path="/bookings" element={<Booking />} />
+                  <Route path="/booking-details" element={<BookingDetails />} />
+                </Routes>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </div>
+        )}
+      </section>
     </>
   );
 }
