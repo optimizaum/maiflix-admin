@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash, FaArrowRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AddServices from "./AddServices";
 import TablePagination from "@mui/material/TablePagination";
 import { MyContext } from "../../../context/MyContext";
 import axios from "axios";
+import UpdateServices from "./UpdateServices";
 
 const Services = () => {
   const { API_BASE_URL, allServices, getAllServices } = useContext(MyContext);
@@ -46,7 +47,12 @@ const Services = () => {
         });
     }
   };
+  const [selectedServices, setSelectedServices] = useState(null);
 
+  const handleUpdate = (id) => {
+    setSelectedServices(id);
+    setIsModalOpen(true);
+  };
   return (
     <>
       <div className=" p-6 h-screen">
@@ -116,7 +122,9 @@ const Services = () => {
                         <div className="flex justify-center space-x-4">
                           <button
                             className="text-gray-700 hover:text-yellow-700 cursor-pointer"
-                            onClick={() => handleUpdate(service?._id)}
+                            onClick={() => {
+                              handleUpdate(service?._id);
+                            }}
                           >
                             <FaEdit />
                           </button>
@@ -124,7 +132,7 @@ const Services = () => {
                             className="text-gray-700 hover:text-red-700 cursor-pointer"
                             onClick={() => handleDelete(service?._id)}
                           >
-                            <FaTrash />
+                            <FaTrash />{" "}
                           </button>
                           <button
                             onClick={handlePackage}
@@ -153,6 +161,15 @@ const Services = () => {
       </div>
       {/* --------------- */}
       {isModalOpen && <AddServices closeModal={() => setIsModalOpen(false)} />}
+      {isModalOpen && selectedServices && (
+        <UpdateServices
+          serviceData={selectedServices}
+          closeModal={() => {
+            setIsModalOpen(false);
+            setSelectedServices(null); // Optional cleanup
+          }}
+        />
+      )}
     </>
   );
 };

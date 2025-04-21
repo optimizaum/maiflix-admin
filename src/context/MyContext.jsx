@@ -8,6 +8,7 @@ const MyContextProvider = (props) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [role, setRole] = useState("");
   const [allServices, setAllServices] = useState([]);
+  const [showUpdateDetails, setShowUpdateDetails] = useState(false);
   const getAllServices = () => {
     axios
       .get(`${API_BASE_URL}/service/get-all-service`, {
@@ -23,6 +24,22 @@ const MyContextProvider = (props) => {
       });
   };
 
+  const [singleServices, setSingleServices] = useState({});
+  const getAllSingleServices = (id) => {
+    axios
+      .get(`${API_BASE_URL}/service/single/${id}`, {
+        headers: { Authorization: `${localStorage.getItem("token")}` },
+      })
+      .then((result) => {
+        console.log("this is result", result);
+        const data = result?.data?.data;
+        setSingleServices(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const value = {
     API_BASE_URL,
     role,
@@ -30,6 +47,8 @@ const MyContextProvider = (props) => {
     navigate,
     allServices,
     getAllServices,
+    singleServices,
+    getAllSingleServices,
   };
   return (
     <MyContext.Provider value={value}>{props.children}</MyContext.Provider>

@@ -15,9 +15,7 @@ const Login = () => {
       password,
     };
     axios
-      .post(`${API_BASE_URL}/auth/login`, payload, {
-        withCredentials: true,
-      })
+      .post(`${API_BASE_URL}/auth/login`, payload)
       .then((result) => {
         console.log(result);
         localStorage.setItem("token", result?.data?.token);
