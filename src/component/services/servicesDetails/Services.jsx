@@ -28,10 +28,24 @@ const Services = () => {
     getAllServices();
   }, []);
   // console.log("---->", allServices);
-  // const handleDelete = (e) => {
-  //   e.preventDefault();
-  //   axios.delete(`${API_BASE_URL}/{headers:{Authorization:`${localStorage.getItem("token")}}})
-  // };
+  const handleDelete = (id) => {
+    const confirm = window.confirm("DO you want to delete ? ");
+    if (confirm) {
+      axios
+        .delete(`${API_BASE_URL}/service/delete/service/${id}`, {
+          headers: { Authorization: `${localStorage.getItem("token")}` },
+        })
+        .then((result) => {
+          console.log(result);
+          alert("Deleted Successfully!!!");
+          getAllServices();
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Error whlie deleting!!!");
+        });
+    }
+  };
 
   return (
     <>
@@ -100,12 +114,15 @@ const Services = () => {
                       </td>
                       <td className="py-2 px-6 border border-gray-300 ">
                         <div className="flex justify-center space-x-4">
-                          <button className="text-gray-700 hover:text-yellow-700 cursor-pointer">
+                          <button
+                            className="text-gray-700 hover:text-yellow-700 cursor-pointer"
+                            onClick={() => handleUpdate(service?._id)}
+                          >
                             <FaEdit />
                           </button>
                           <button
                             className="text-gray-700 hover:text-red-700 cursor-pointer"
-                            onClick={handleDelete}
+                            onClick={() => handleDelete(service?._id)}
                           >
                             <FaTrash />
                           </button>
