@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext, useEffect} from 'react';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import AddTestimonial from './AddTestimonials';
 import TablePagination from "@mui/material/TablePagination";
 import { MdDownloading } from "react-icons/md";
+import { MyContext } from '../../context/MyContext';
 
 
 const Testimonials = () => {
+     const { API_BASE_URL, alltestimonials, fetchTestimonials } = useContext(MyContext);
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
 
+    useEffect(()=>{
+        fetchTestimonials();
+    },[])
+console.log("allTestimonials",alltestimonials);
     const [testimonialData, setTestimonialData] = useState([
         {
             id: 1,
@@ -65,7 +71,7 @@ const Testimonials = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {testimonialData
+                        {alltestimonials && alltestimonials
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((testimonial, index) => (
                                 <tr key={testimonial.id}>

@@ -25,6 +25,7 @@ const Services = () => {
   const handlePackage = () => {
     navigate("/packages");
   };
+  
   useEffect(() => {
     getAllServices();
   }, []);
