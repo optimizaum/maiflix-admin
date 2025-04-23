@@ -1,38 +1,36 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+
 import { RxCross2 } from "react-icons/rx";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { MyContext } from "../../../context/MyContext";
-import { idID } from "@mui/material/locale";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 
-const AddPackages = ({ closeModal, serviceId }) => {
-  const { API_BASE_URL } = useContext(MyContext);
-  const [name, setName] = useState("");
+const UpdateServicesPackage = ({ closeModal }) => {
+  const { API_BASE_URL, getAllServices } = useContext(MyContext);
+  const [service, setService] = useState("");
   const [description, setDescription] = useState("");
-  console.log("----->", serviceId);
-  const service_Id = localStorage.getItem("serviceId");
-  console.log(service_Id);
+  const [image, setImage] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    closeModal();
-    const payload = {
-      name,
-      description,
-      serviceIds: service_Id,
-    };
+    const formData = new FormData();
+    formData.append("name", service);
+    formData.append("description", description);
+    formData.append("image", image);
     axios
-      .post(`${API_BASE_URL}/package/add-package`, payload, {
+      .post(`${API_BASE_URL}/service/add-service`, formData, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
       .then((result) => {
         console.log(result);
+        getAllServices();
       })
       .catch((error) => {
         console.log(error);
+        alert("Error while adding the data ");
       });
+    closeModal();
   };
   const modules = {
     toolbar: [
@@ -66,10 +64,9 @@ const AddPackages = ({ closeModal, serviceId }) => {
     "blockquote",
     "code-block",
   ];
-
   return (
     <div className="fixed inset-0 bg-[#000000b8] bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-3xl relative">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-2xl relative">
         <button
           type="button"
           onClick={closeModal}
@@ -78,19 +75,19 @@ const AddPackages = ({ closeModal, serviceId }) => {
           <RxCross2 className="font-bold text-white " />
         </button>
 
-        <h2 className="text-xl font-bold mb-4">Add New Packages</h2>
+        <h2 className="text-xl font-bold mb-4">Add New Service</h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-md font-semibold">Package Name</label>
+            <label className="block text-md font-semibold">Service Name</label>
             <input
               type="text"
-              name="packageName"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              name="serviceName"
+              value={service}
+              onChange={(e) => setService(e.target.value)}
               required
               className="w-full p-2 border rounded-md"
-              placeholder="Enter Package name"
+              placeholder="Enter service name"
             />
           </div>
 
@@ -98,26 +95,23 @@ const AddPackages = ({ closeModal, serviceId }) => {
             <ReactQuill
               theme="snow"
               value={description}
-              onChange={setDescription}
+              onChange={(content) => setDescription(content)}
               modules={modules}
               formats={formats}
-              className=" h-[210px] bg-white "
-              placeholder="Product Description..."
+              className=" h-[184px] bg-white "
+              placeholder="Service Description..."
             />
           </div>
 
-          {/* <div>
-            <label className="block text-md font-semibold">Package Amount</label>
+          <div>
+            <label className="block text-md font-semibold">Upload Image</label>
             <input
-              type="number"
-              name="packageAmount"
-            //   value=""
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded-md [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-              placeholder="Enter Package Amount"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+              className="w-full p-2 border rounded-md"
             />
-          </div> */}
+          </div>
 
           <div className="flex justify-end space-x-2">
             <button
@@ -133,4 +127,4 @@ const AddPackages = ({ closeModal, serviceId }) => {
   );
 };
 
-export default AddPackages;
+export default UpdateServicesPackage;

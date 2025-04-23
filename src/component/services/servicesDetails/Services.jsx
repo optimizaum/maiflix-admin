@@ -8,11 +8,18 @@ import axios from "axios";
 import UpdateServices from "./UpdateServices";
 
 const Services = () => {
-  const { API_BASE_URL, allServices, getAllServices } = useContext(MyContext);
+  const {
+    API_BASE_URL,
+    allServices,
+    getAllServices,
+    selectedServices,
+    setSelectedServices,
+  } = useContext(MyContext);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -22,9 +29,6 @@ const Services = () => {
     setPage(0);
   };
 
-  const handlePackage = () => {
-    navigate("/packages");
-  };
   useEffect(() => {
     getAllServices();
   }, []);
@@ -47,12 +51,19 @@ const Services = () => {
         });
     }
   };
-  const [selectedServices, setSelectedServices] = useState(null);
 
   const handleUpdate = (id) => {
     setSelectedServices(id);
     setIsModalOpen(true);
   };
+
+  const handlePackage = (id) => {
+    setSelectedServices(id);
+    localStorage.setItem("serviceId", id);
+    navigate(`/packages`);
+  };
+  console.log(selectedServices);
+
   return (
     <>
       <div className=" p-6 h-screen">
@@ -135,7 +146,7 @@ const Services = () => {
                             <FaTrash />{" "}
                           </button>
                           <button
-                            onClick={handlePackage}
+                            onClick={() => handlePackage(service?._id)}
                             className="text-gray-700 hover:text-black cursor-pointer"
                           >
                             <FaArrowRight />
@@ -166,7 +177,7 @@ const Services = () => {
           serviceData={selectedServices}
           closeModal={() => {
             setIsModalOpen(false);
-            setSelectedServices(null); // Optional cleanup
+            setSelectedServices(null);
           }}
         />
       )}

@@ -7,7 +7,7 @@ import { MyContext } from "../../../context/MyContext";
 import axios from "axios";
 
 const AddServices = ({ closeModal }) => {
-  const { API_BASE_URL } = useContext(MyContext);
+  const { API_BASE_URL, getAllServices } = useContext(MyContext);
   const [service, setService] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
@@ -24,9 +24,11 @@ const AddServices = ({ closeModal }) => {
       })
       .then((result) => {
         console.log(result);
+        getAllServices();
       })
       .catch((error) => {
         console.log(error);
+        alert("Error while adding the data ");
       });
     closeModal();
   };

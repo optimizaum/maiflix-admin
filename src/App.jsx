@@ -53,7 +53,7 @@ function App() {
                   <Route path="/packages" element={<ServicePackage />} />
                   <Route path="/slot" element={<Slot />} />
                   <Route path="/testimonials" element={<Testimonials />} />
-                  <Route path="/transactions" element={<Transaction/>}/>
+                  <Route path="/transactions" element={<Transaction />} />
                   <Route path="/users" element={<User />} />
                   <Route path="/bookings" element={<Booking />} />
                   <Route path="/booking-details" element={<BookingDetails />} />
