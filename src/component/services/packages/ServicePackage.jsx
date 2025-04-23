@@ -43,7 +43,8 @@ const ServicePackage = () => {
     setPage(0);
   };
 
-  const handleSlot = () => {
+  const handleSlot = (id) => {
+     localStorage.setItem("packageId", id);
     navigate("/slot");
   };
   const id = localStorage.getItem("serviceId");
@@ -149,7 +150,7 @@ const ServicePackage = () => {
                             <FaTrash />
                           </button>
                           <button
-                            onClick={handleSlot}
+                            onClick={()=>handleSlot(service?._id)}
                             className="text-gray-700 hover:text-black cursor-pointer"
                             aria-label="View Slots"
                           >

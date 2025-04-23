@@ -2,29 +2,42 @@ import React, { useState, useRef } from "react";
 import { RxCross2 } from "react-icons/rx";
 import DatePicker from "react-datepicker";
 import { FaRegClock } from "react-icons/fa";
+import { MyContext } from "../../../context/MyContext"; 
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 
 const AddSlot = ({ closeModal }) => {
   const [selectedTime, setSelectedTime] = useState(null);
+   const { API_BASE_URL } = useContext(MyContext);
   console.log("----->", selectedTime);
-
+  const packageId=localStorage.getItem('packageId');
   const [selectTime, setSelecteTime] = useState(null);
   const datePickerRef = useRef(null);
   const timepicker = useRef(null);
   const [formData, setFormData] = useState({
-    time: "",
-    day: "",
+    start: "",
+    end:"",
+    days: "",
     price: "",
   });
 
   const handleChange = (e) => {
-    const { time, value } = e.target;
-    setFormData({ ...formData, [time]: value, day: value, price: value });
+    const { name, value } = e.target;
+    setFormData({ ...formData,[name]:value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    console.log("packageId ",packageId)
+     try{
+         const response= await axios.post(`${API_BASE_URL}/slots/add-slots/${packageId}`, {
+        headers: { Authorization: `${localStorage.getItem("token")}` },
+     },formData);
+     console.log(response);
 
+     }catch(err){
+      console.log(err);
+     }
     closeModal();
   };
 
@@ -41,7 +54,7 @@ const AddSlot = ({ closeModal }) => {
           </button>
 
           <h2 className="text-xl font-bold mb-4">Add New Slots</h2>
-          <form className="space-y-4">
+          <form className="space-y-4"  onSubmit={handleSubmit}>
             <div>
               <label className="block text-md font-semibold"> Time</label>
               <div className="flex flex-wrap gap-5">
@@ -53,7 +66,14 @@ const AddSlot = ({ closeModal }) => {
                     <DatePicker
                       selected={selectedTime}
                       ref={datePickerRef}
-                      onChange={(time) => setSelectedTime(time)}
+                      onChange={(time) =>{
+                       setSelectedTime(time)
+                        setFormData((prevData) => ({
+      ...prevData,
+      start: time, // save start time to formData
+    }));
+                      }
+                       }
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={15}
@@ -76,7 +96,14 @@ const AddSlot = ({ closeModal }) => {
                     <DatePicker
                       selected={selectTime}
                       ref={timepicker}
-                      onChange={(time) => setSelecteTime(time)}
+                      onChange={(time) =>{
+                         setSelecteTime(time)
+                          setFormData((prevData) => ({
+      ...prevData,
+      end: time, // save start time to formData
+    }));
+                      }
+                         }
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={15}
@@ -99,6 +126,7 @@ const AddSlot = ({ closeModal }) => {
               <input
                 type="number"
                 //   value=""
+                name="days"
                 onChange={handleChange}
                 required
                 className="w-full p-2 border rounded-md [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
@@ -110,6 +138,7 @@ const AddSlot = ({ closeModal }) => {
               <label className="block text-md font-semibold">Price</label>
               <input
                 type="number"
+                name="price"
                 onChange={handleChange}
                 className="w-full p-2 border rounded-md [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
               />
@@ -118,7 +147,7 @@ const AddSlot = ({ closeModal }) => {
             <div className="flex justify-end space-x-2">
               <button
                 type="submit"
-                onSubmit={handleSubmit}
+              
                 className="px-6 py-2 bg-[#ce621a] text-white rounded-lg cursor-pointer text-md"
               >
                 Save
