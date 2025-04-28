@@ -3,7 +3,8 @@ import React, { useState ,useContext} from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { MyContext } from '../../context/MyContext';
 
-const AddTestimonial = ({ closeModal }) => {
+const UpdateTestimonial = ({ closeModal,id }) => {
+    console.log("slote id =======> ",id)
     const { API_BASE_URL,fetchTestimonials } = useContext(MyContext);
     const [formData, setFormData] = useState({
         name: '',
@@ -101,4 +102,4 @@ fetchTestimonials();
     );
 };
 
-export default AddTestimonial;
+export default UpdateTestimonial;

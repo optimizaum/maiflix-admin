@@ -29,6 +29,9 @@ const Services = () => {
     setPage(0);
   };
 
+
+
+
   useEffect(() => {
     getAllServices();
   }, []);

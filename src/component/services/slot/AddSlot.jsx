@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useContext } from "react";
 import { RxCross2 } from "react-icons/rx";
 import DatePicker from "react-datepicker";
 import { FaRegClock } from "react-icons/fa";
@@ -11,28 +11,34 @@ const AddSlot = ({ closeModal }) => {
    const { API_BASE_URL } = useContext(MyContext);
   console.log("----->", selectedTime);
   const packageId=localStorage.getItem('packageId');
+  const serviceId=localStorage.getItem('serviceId')
+  const token =localStorage.getItem('token')
+  console.log(token)
   const [selectTime, setSelecteTime] = useState(null);
   const datePickerRef = useRef(null);
   const timepicker = useRef(null);
   const [formData, setFormData] = useState({
     start: "",
     end:"",
-    days: "",
-    price: "",
+    days: 0,
+    price: 0,
+    serviceId
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData,[name]:value });
+    console.log(name,"  ",+value);
+    setFormData({ ...formData,[name]:+value });
   };
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    console.log("formdata ===>",formData)
     console.log("packageId ",packageId)
      try{
-         const response= await axios.post(`${API_BASE_URL}/slots/add-slots/${packageId}`, {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
-     },formData);
+         const response= await axios.post(`${API_BASE_URL}/slots/add-slots/${packageId}`, formData,{
+        headers: { Authorization: `${token}` },
+     });
      console.log(response);
 
      }catch(err){

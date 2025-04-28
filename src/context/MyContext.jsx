@@ -11,6 +11,8 @@ const MyContextProvider = (props) => {
   const [selectedServices, setSelectedServices] = useState(null);
   const [showUpdateDetails, setShowUpdateDetails] = useState(false);
 
+  const [alltestimonials, setAllTestimonials]=useState([]);
+
   const getAllServices = () => {
     axios
       .get(`${API_BASE_URL}/service/get-all-service`, {
@@ -41,6 +43,7 @@ const MyContextProvider = (props) => {
         console.log(error);
       });
   };
+
   const [allServicePackages, setAllServicePackages] = useState([]);
 
 const getAllServicePackages = () => {
@@ -64,6 +67,19 @@ const getAllServicePackages = () => {
     });
 };
 
+  // ----------testimonials--------
+  const fetchTestimonials = async () => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/testimonial`, {
+            headers: { Authorization: `${localStorage.getItem("token")}` },
+        });
+        setAllTestimonials(response?.data?.data);
+        console.log("response", response);
+    } catch (error) {
+        console.error("error", error);
+    }
+}
+
 
   const value = {
     API_BASE_URL,
@@ -74,10 +90,15 @@ const getAllServicePackages = () => {
     getAllServices,
     singleServices,
     getAllSingleServices,
+
     allServicePackages,
     getAllServicePackages,
     selectedServices,
     setSelectedServices,
+
+    alltestimonials,
+    fetchTestimonials
+
   };
   return (
     <MyContext.Provider value={value}>{props.children}</MyContext.Provider>

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import AddSlot from "./AddSlot";
+import { MyContext } from "../../../context/MyContext";
 import TablePagination from "@mui/material/TablePagination";
+import axios from "axios";
 
 const slotsData = [
   {
@@ -26,18 +28,42 @@ const slotsData = [
 ];
 
 const Slot = () => {
+    const { API_BASE_URL } = useContext(MyContext);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [allSlots,setAllSlots]=useState([]);
 
+  const packageId=localStorage.getItem('packageId')
+  useEffect(()=>{
+    async function fetchData() {
+    
+       try{
+        const response=await axios.get(`${API_BASE_URL}/slots/data/${packageId}`,{
+           headers: { Authorization: `${localStorage.getItem("token")}` },
+        })
+        console.log(response);
+        setAllSlots(response.data.data)
+       }catch(err){
+        console.log(err);
+       }
+      }
+
+       fetchData();
+  },[])
   const handleEdit = (id) => {
     navigate(`/slot/edit/${id}`);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async(id) => {
     console.log(`Deleting slot with ID: ${id}`);
     // Implement delete logic here
+    try{
+      const response=await axios.delete(``)
+    }catch(err){
+      console.log(err)
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -91,15 +117,15 @@ const Slot = () => {
             </thead>
 
             <tbody>
-              {slotsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((slot, index) => (
+              {allSlots.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((slot, index) => (
                 <tr key={slot.id} className="">
                   <td className="py-2 border border-gray-300 px-6 text-sm text-center">
                     {page * rowsPerPage + index + 1}
                   </td>
                   <td className="py-2 border border-gray-300 px-6 text-sm text-center ">{slot.days}</td>
-                  <td className="py-2 border border-gray-300 px-6 text-sm text-center ">{slot.startTime}</td>
-                  <td className="py-2 border border-gray-300 px-6 text-sm text-center ">{slot.endTime}</td>
-                  <td className="py-2 border border-gray-300 px-6 text-sm text-center ">{slot.hours} hrs</td>
+                  <td className="py-2 border border-gray-300 px-6 text-sm text-center ">{slot.start}</td>
+                  <td className="py-2 border border-gray-300 px-6 text-sm text-center ">{slot.end}</td>
+                  <td className="py-2 border border-gray-300 px-6 text-sm text-center ">{slot.Hours} hrs</td>
                   <td className="py-2 border border-gray-300 px-6 text-sm text-center  ">{slot.price}</td>
                   <td className="py-2 px-6 text-center border border-gray-300">
                     <div className="flex justify-center space-x-4 ">
@@ -107,14 +133,14 @@ const Slot = () => {
                         <FaEye size={18} />
                       </button>
                       <button
-                        onClick={() => handleEdit(slot.id)}
+                        onClick={() => handleEdit(slot._id)}
                         className="text-black hover:text-yellow-700 cursor-pointer"
                         title="Edit"
                       >
                         <FaEdit size={18} />
                       </button>
                       <button
-                        onClick={() => handleDelete(slot.id)}
+                        onClick={() => handleDelete(slot._id)}
                         className="text-black hover:text-red-700 cursor-pointer"
                         title="Delete"
                       >

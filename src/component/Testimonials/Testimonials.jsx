@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext, useEffect} from 'react';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import AddTestimonial from './AddTestimonials';
 import TablePagination from "@mui/material/TablePagination";
 import { MdDownloading } from "react-icons/md";
+import UpdateTestimonial from './UpdateTestimonial'
+import { MyContext } from '../../context/MyContext';
+import axios from 'axios';
 
 
 const Testimonials = () => {
+     const { API_BASE_URL, alltestimonials, fetchTestimonials } = useContext(MyContext);
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalUpdate,setIsModalUpdate]=useState(false);
+    const [sloteId,setSloteId]=useState(-1)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
 
+    useEffect(()=>{
+        fetchTestimonials();
+    },[])
+console.log("allTestimonials",alltestimonials);
     const [testimonialData, setTestimonialData] = useState([
         {
             id: 1,
@@ -39,13 +49,26 @@ const Testimonials = () => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+   const handleDelete=async(id)=>{
+    try{
+           const response=await axios.delete(`${API_BASE_URL}/testimonial/${id}`,{
+            headers: { Authorization: `${localStorage.getItem("token")}` },
+        })
+        fetchTestimonials();
+           console.log(response);
+    }catch(err){
+        console.log(err)
 
+    }
+   }
     return (
         <div className="container mx-auto p-4">
             <div className="flex flex-wrap items-center justify-between mb-4">
                 <h1 className="text-xl font-bold">Testimonials</h1>
                 <button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() =>{ setIsModalOpen(true)
+                  
+                    }}
                     className="bg-[#ce621a] px-4 py-2 rounded-lg text-white font-semibold"
                 >
                     Add Testimonial
@@ -65,10 +88,10 @@ const Testimonials = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {testimonialData
+                        {alltestimonials && alltestimonials
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((testimonial, index) => (
-                                <tr key={testimonial.id}>
+                                <tr key={testimonial._id}>
                                     <td className="py-2 border border-gray-300 px-6 text-sm text-center">
                                         {page * rowsPerPage + index + 1}
                                     </td>
@@ -91,9 +114,18 @@ const Testimonials = () => {
                                                 <button className="text-gray-700 hover:text-blue-700 cursor-pointer">
                                                     <FaEye />
                                                 </button>
-                                                <button className="text-gray-700 hover:text-yellow-700 cursor-pointer">
+                                                <button onClick={()=>{
+                                                     setIsModalUpdate(true)
+                                                     setSloteId(testimonial._id)
+                                                }} className="text-gray-700 hover:text-yellow-700 cursor-pointer">
                                                     <FaEdit />
                                                 </button>
+                                                 <button
+                                                                            className="text-gray-700 hover:text-red-700 cursor-pointer"
+                                                                            onClick={() => handleDelete(testimonial?._id)}
+                                                                          >
+                                                                            <FaTrash />{" "}
+                                                                          </button>
                                             </td>
                                         </div>
                                     </td>
@@ -133,6 +165,9 @@ const Testimonials = () => {
             {/* Modal */}
             {isModalOpen && (
                 <AddTestimonial closeModal={() => setIsModalOpen(false)} addTestimonial={addTestimonial} />
+            )}
+             {isModalUpdate && (
+                <UpdateTestimonial closeModal={() => setIsModalUpdate(false)} id={sloteId}/>
             )}
         </div>
     );

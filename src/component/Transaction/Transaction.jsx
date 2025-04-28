@@ -106,7 +106,7 @@ const Transaction = () => {
                     onPageChange={handleChangePage}
                     rowsPerPage={rowsPerPage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    className="flex justify-end" />
+                    className="flex justify-end"/>
             </div>
         </div>
     );
