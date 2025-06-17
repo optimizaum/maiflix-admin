@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FaEdit, FaCalendarAlt, FaFilter } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 
 const UserData = [
     { id: 1, name: "sohan", city: "noida", pincode: "211019", mobile: "9365653452", emailid: "sohan@gmail.com" },
@@ -81,6 +83,9 @@ const User = () => {
                                     <button className="hover:text-blue-700 cursor-pointer">
                                         <FaCalendarAlt />
                                     </button>
+                                    {/* <button className="hover:text-blue-700 cursor-pointer">
+                                        <BsThreeDotsVertical />
+                                    </button> */}
                                     </div>
                                 </td>
                             </tr>

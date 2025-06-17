@@ -39,7 +39,7 @@ const AddSlot = ({ closeModal }) => {
          const response= await axios.post(`${API_BASE_URL}/slots/add-slots/${packageId}`, formData,{
         headers: { Authorization: `${token}` },
      });
-     console.log(response);
+     console.log("response----",response);
 
      }catch(err){
       console.log(err);

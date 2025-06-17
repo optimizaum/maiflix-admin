@@ -17,6 +17,12 @@ import { BsChatQuoteFill } from "react-icons/bs";
 const Sidebar = () => {
   const location = useLocation();
 
+    const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.reload(); // or use navigate('/login') if using React Router
+    navigate("/login");
+  };
+
   return (
     <div className="w-60 h-screen bg-[#c95203e8] overflow-y-auto font-semibold text-white text-md flex flex-col p-4 shadow-lg [&::-webkit-scrollbar]:hidden">
       <nav className="flex flex-col gap-4">
@@ -135,6 +141,7 @@ const Sidebar = () => {
 
         <NavLink 
           to="/logout" 
+          onClick={handleLogout}  
           className={({ isActive }) => 
             `flex items-center gap-3 p-3 rounded-lg ${
               isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"

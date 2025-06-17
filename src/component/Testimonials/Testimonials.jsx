@@ -8,7 +8,6 @@ import UpdateTestimonial from './UpdateTestimonial'
 import { MyContext } from '../../context/MyContext';
 import axios from 'axios';
 
-
 const Testimonials = () => {
      const { API_BASE_URL, alltestimonials, fetchTestimonials } = useContext(MyContext);
     const navigate = useNavigate();

@@ -48,7 +48,6 @@ fetchTestimonials();
                 </button>
 
                 <h2 className="text-xl font-bold mb-4">Add Testimonial</h2>
-
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
                         <label className="block text-md font-semibold">Name</label>
