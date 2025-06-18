@@ -45,29 +45,7 @@ const Sidebar = () => {
           }>
           <FaUsers /> MemberShip
         </NavLink>
-
-        <NavLink
-          to="/services"
-          className={() =>
-            `flex items-center gap-3 p-3 rounded-lg ${location.pathname.startsWith("/services") || location.pathname.startsWith("/packages") || location.pathname.startsWith("/slot")
-              ? "bg-white text-black"
-              : "hover:bg-white hover:text-black"
-            }`
-          }
-        >
-          <GrServices /> Services
-        </NavLink>
-
-        <NavLink
-          to="/bookings"
-          className={() =>
-            `flex items-center gap-3 p-3 rounded-lg ${location.pathname.startsWith("/bookings") || location.pathname.startsWith("/booking-details") ? "bg-white text-black" : "hover:bg-white hover:text-black"
-            }`
-          }>
-          <TbBrandBooking /> Bookings
-        </NavLink>
-
-        <NavLink
+         <NavLink
           to="/users"
           className={({ isActive }) =>
             `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
@@ -75,26 +53,7 @@ const Sidebar = () => {
           }>
           <FaUsers /> User
         </NavLink>
-
-        <NavLink
-          to="/employees"
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
-            }`
-          }>
-          <HiUsers /> Employee
-        </NavLink>
-
-        <NavLink
-          to="/notifications"
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
-            }`
-          }>
-          <IoMdNotifications /> Notifications
-        </NavLink>
-
-        <NavLink
+         <NavLink
           to="/testimonials"
           className={({ isActive }) =>
             `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
@@ -103,43 +62,7 @@ const Sidebar = () => {
           <GrTransaction /> Testimonials
         </NavLink>
 
-        <NavLink
-          to="/transactions"
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
-            }`
-          }>
-          <BsChatQuoteFill /> Transactions
-        </NavLink>
-
-        <NavLink
-          to="/analytics"
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
-            }`
-          }>
-          <SiGoogleanalytics /> Analytics
-        </NavLink>
-
-        <NavLink
-          to="/support"
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
-            }`
-          }>
-          <MdOutlineSupportAgent /> Support
-        </NavLink>
-
-        <NavLink
-          to="/settings"
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
-            }`
-          }>
-          <IoSettings /> Settings
-        </NavLink>
-
-        <NavLink
+ <NavLink
           to="/logout"
           onClick={handleLogout}
           className={({ isActive }) =>
@@ -149,6 +72,86 @@ const Sidebar = () => {
           <IoMdLogOut /> Logout
         </NavLink>
 
+        {/* <NavLink
+          to="/services"
+          className={() =>
+            `flex items-center gap-3 p-3 rounded-lg ${location.pathname.startsWith("/services") || location.pathname.startsWith("/packages") || location.pathname.startsWith("/slot")
+              ? "bg-white text-black"
+              : "hover:bg-white hover:text-black"
+            }`
+          }
+        >
+          <GrServices /> Services
+        </NavLink> */}
+
+        {/* <NavLink
+          to="/bookings"
+          className={() =>
+            `flex items-center gap-3 p-3 rounded-lg ${location.pathname.startsWith("/bookings") || location.pathname.startsWith("/booking-details") ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <TbBrandBooking /> Bookings
+        </NavLink> */}
+
+       
+
+        {/* <NavLink
+          to="/employees"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <HiUsers /> Employee
+        </NavLink> */}
+
+        {/* <NavLink
+          to="/notifications"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <IoMdNotifications /> Notifications
+        </NavLink> */}
+
+       
+
+        {/* <NavLink
+          to="/transactions"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <BsChatQuoteFill /> Transactions
+        </NavLink> */}
+
+        {/* <NavLink
+          to="/analytics"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <SiGoogleanalytics /> Analytics
+        </NavLink> */}
+
+        {/* <NavLink
+          to="/support"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <MdOutlineSupportAgent /> Support
+        </NavLink> */}
+
+        {/* <NavLink
+          to="/settings"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <IoSettings /> Settings
+        </NavLink> */}
+
+       
       </nav>
     </div>
   );

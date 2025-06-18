@@ -14,25 +14,21 @@ const Testimonials = () => {
       id: 1,
       name: 'Akash',
       description: 'It is my testimonial 1',
-      image: 'https://marketplace.canva.com/EAFUdYqHyx0/1/0/1280w/canva-green-modern-customer-testimonials-instagram-post-p8RrhQOeAmc.jpg'
     },
     {
       id: 2,
       name: 'Riya',
       description: 'It is my testimonial 2',
-      image: 'https://marketplace.canva.com/EAFUdYqHyx0/1/0/1280w/canva-green-modern-customer-testimonials-instagram-post-p8RrhQOeAmc.jpg'
     },
     {
       id: 3,
       name: 'Aman',
       description: 'It is my testimonial 3',
-      image: 'https://marketplace.canva.com/EAFUdYqHyx0/1/0/1280w/canva-green-modern-customer-testimonials-instagram-post-p8RrhQOeAmc.jpg'
     },
     {
       id: 4,
       name: 'Neha',
       description: 'It is my testimonial 4',
-      image: 'https://marketplace.canva.com/EAFUdYqHyx0/1/0/1280w/canva-green-modern-customer-testimonials-instagram-post-p8RrhQOeAmc.jpg'
     },
   ];
 
@@ -63,7 +59,6 @@ const Testimonials = () => {
               <th className="py-3 px-4 border border-gray-300">SR No</th>
               <th className="py-3 px-4 border border-gray-300">Name</th>
               <th className="py-3 px-4 border border-gray-300">Description</th>
-              <th className="py-3 px-4 border border-gray-300">Image</th>
               <th className="py-3 px-4 border border-gray-300 text-center">Action</th>
             </tr>
           </thead>
@@ -82,13 +77,7 @@ const Testimonials = () => {
                     <td className="py-2 px-4 border border-gray-300 text-center">
                       {testimonial.description}
                     </td>
-                    <td className="py-2 px-4 border border-gray-300 text-center">
-                      <img
-                        src={testimonial.image}
-                        alt="testimonial"
-                        className="w-12 h-12 rounded object-cover mx-auto"
-                      />
-                    </td>
+                   
                     <td className="py-2 px-4 border border-gray-300 text-center">
                       <div className="flex justify-center gap-4 text-lg text-gray-700">
                         <button className="hover:text-blue-600" title="View">
@@ -117,7 +106,7 @@ const Testimonials = () => {
         </table>
       </div>
 
-      <div className="mt-4 flex justify-center">
+      <div className="fixed bottom-0 w-full bg-gray-200 shadow-md flex justify-center">
         <TablePagination
           component="div"
           count={testimonialData.length}
