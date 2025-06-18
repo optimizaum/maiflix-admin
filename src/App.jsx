@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom"; // Remove BrowserRouter here
+import { Routes, Route, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-
 import "./App.css";
 import Sidebar from "./pages/Sidebar";
 import Header from "./pages/Header";
@@ -16,11 +15,12 @@ import { MyContext } from "./context/MyContext";
 import DashBoard from "./component/DashBoard";
 import Testimonials from "./component/Testimonials/Testimonials";
 import Transaction from "./component/Transaction/Transaction";
+import Membership from "./component/Membership/Membership";
 function App() {
   const { role, setRole, navigate } = useContext(MyContext);
   const { pathname } = useLocation();
   const token = localStorage.getItem("token");
-  console.log(token);
+  // console.log(token);
 
   useEffect(() => {
     if (token) {
@@ -49,6 +49,7 @@ function App() {
               <div className="flex-1 ">
                 <Routes>
                   <Route path="/" element={<DashBoard />} />
+                  <Route path="/membership" element={<Membership/>}/>
                   <Route path="/services" element={<Services />} />
                   <Route path="/packages" element={<ServicePackage />} />
                   <Route path="/slot" element={<Slot />} />
