@@ -11,7 +11,7 @@ const MyContextProvider = (props) => {
   const [selectedServices, setSelectedServices] = useState(null);
   const [showUpdateDetails, setShowUpdateDetails] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState(null);
-
+  const [selectedTestimonialId, setSelectedTestimonialId] = useState(null);
   const [alltestimonials, setAllTestimonials] = useState([]);
 
   const getAllServices = () => {
@@ -70,12 +70,14 @@ const MyContextProvider = (props) => {
 
   // ----------testimonials--------
   const fetchTestimonials = async () => {
+    const token = localStorage.getItem('token')
     try {
-      const response = await axios.get(`${API_BASE_URL}/testimonial`, {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
+      const response = await axios.get(`${API_BASE_URL}admin/getAll-testimonial`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
+      console.log("response testimonial", response);
       setAllTestimonials(response?.data?.data);
-      console.log("response", response);
+
     } catch (error) {
       console.error("error", error);
     }
@@ -85,8 +87,11 @@ const MyContextProvider = (props) => {
   const [membership, setmembership] = useState([])
   const fetchMembership = async () => {
     try {
+      const token = localStorage.getItem('token')
       const response = await axios.get(`${API_BASE_URL}admin/all-form`, {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
       });
       setmembership(response?.data?.data);
       // console.log("membership response ", response);
@@ -94,7 +99,20 @@ const MyContextProvider = (props) => {
       console.error("error", error);
     }
   }
-  
+  // -----------------get all testimonials------------------
+  // const [alltestimonial, setAllTestimonials] = useState([])
+  // const fetchTestimonials = async () => {
+  //   try {
+  //     const response = await axios.get(`${API_BASE_URL}admin/all-form`, {
+  //       headers: { Authorization: `${localStorage.getItem("token")}` },
+  //     });
+  //     setmembership(response?.data?.data);
+  //     // console.log("membership response ", response);
+  //   } catch (error) {
+  //     console.error("error", error);
+  //   }
+  // }
+
   // ----------------single user membership----------------
   // const [singleMembership, setsingleMembership] = useState({})
   // const fetchsingleMembership = async (id) => {
@@ -132,7 +150,9 @@ const MyContextProvider = (props) => {
     // fetchsingleMembership,
 
     setSelectedMemberId,
-    selectedMemberId
+    selectedMemberId    
+    , selectedTestimonialId,
+    setSelectedTestimonialId
 
 
   };

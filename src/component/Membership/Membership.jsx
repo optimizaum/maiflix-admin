@@ -44,10 +44,11 @@ const Membership = () => {
 
     const handleStatusChange = async (id, newStatus) => {
         try {
+            const token=localStorage.getItem('token')
             const response = await axios.put(
                 `${API_BASE_URL}admin/form/${id}`,
                 { status: newStatus },
-                { headers: { Authorization: `${localStorage.getItem("token")}` } }
+                { headers: { Authorization: `Bearer ${token}` } }
             );
 
             console.log("Status updated:", response.data);
@@ -72,7 +73,7 @@ const Membership = () => {
                                     "Sr.No", "Name", "Contact Number", "Email ID", "Address",
                                     "MemberShip Plan", "MemberShip Price", "Status", "Action"
                                 ].map((header, i) => (
-                                    <th key={i} className="py-2 px-2 text-center text-sm border border-gray-400 font-bold text-gray-600 tracking-wider">
+                                    <th key={i} className="py-2 px-2 text-center text-sm border border-gray-300 font-bold text-gray-600 tracking-wider">
                                         {header}
                                     </th>
                                 ))}

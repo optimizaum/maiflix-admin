@@ -12,8 +12,11 @@ const MembershipDetails = ({ handleStatusChange }) => {
     useEffect(() => {
         const fetchDetails = async () => {
             try {
+                const token = localStorage.getItem('token')
                 const response = await axios.get(`${API_BASE_URL}admin/form/${selectedMemberId}`, {
-                    headers: { Authorization: `${localStorage.getItem("token")}` },
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
                 });
                 setSingleMembership(response.data.form);
             } catch (error) {
@@ -30,20 +33,35 @@ const MembershipDetails = ({ handleStatusChange }) => {
 
     return (
         <div className="bg-white p-6 rounded-lg">
-            <ul className="text-sm space-y-2">
-                <li><strong>Name:</strong> {singleMembership.name}</li>
-                <li><strong>Contact:</strong> {singleMembership.mobileNumber}</li>
-                <li><strong>Email:</strong> {singleMembership.email}</li>
-                <li><strong>Address:</strong> {singleMembership.address?.addressLine1}</li>
-                <li><strong>City:</strong> {singleMembership.address?.city}</li>
-                <li><strong>Country:</strong> {singleMembership.address?.country}</li>
-                <li><strong>PinCode:</strong> {singleMembership.address?.pincode}</li>
-                <li><strong>State:</strong> {singleMembership.address?.state}</li>
-                <li><strong>Plan:</strong> {singleMembership.membershipPlan}</li>
-                <li><strong>Price:</strong> {singleMembership.memberShipPrice}</li>
-                <li><strong>Transaction ID:</strong> {singleMembership.utr}</li>
-                <li><strong>Status:</strong> {singleMembership.approval}</li>
-                 <li><strong>Payment Screenshot:</strong> {singleMembership.approval}</li>
+            <ul className="text-sm space-y-4">
+                <div className='flex flex-wrap'>
+                    <div className='flex-1 space-y-2'>
+                        <li><strong>Name:</strong> {singleMembership.name}</li>
+                        <li><strong>Contact:</strong> {singleMembership.mobileNumber}</li>
+                        <li><strong>Email:</strong> {singleMembership.email}</li>
+                        <li><strong>Address:</strong> {singleMembership.address?.addressLine1}</li>
+                        <li><strong>City:</strong> {singleMembership.address?.city}</li>
+                        <li><strong>Country:</strong> {singleMembership.address?.country}</li>
+                        <li><strong>PinCode:</strong> {singleMembership.address?.pincode}</li>
+                        <li><strong>State:</strong> {singleMembership.address?.state}</li>
+                        <li><strong>Plan:</strong> {singleMembership.membershipPlan}</li>
+                        <li><strong>Price:</strong> {singleMembership.memberShipPrice}</li>
+                        <li><strong>Transaction ID:</strong> {singleMembership.utr}</li>
+                        <li><strong>Status:</strong>    {singleMembership.approval}</li>
+
+                    </div>
+                    <div className='flex-1'>
+                        <li className='text-center'>
+                            <strong>Payment Screenshot:</strong>
+                            <img
+                                src={`http://localhost:3000/api/v1/uploads/${singleMembership.paymentScreenShot}`}
+                                alt="Payment Screenshot"
+                                className="h-auto rounded shadow-md items-center"
+                            />
+
+                        </li>
+                    </div>
+                </div>
             </ul>
             <div className="mt-4 flex justify-between">
                 <button
