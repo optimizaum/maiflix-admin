@@ -45,14 +45,14 @@ const Sidebar = () => {
           }>
           <FaUsers /> MemberShip
         </NavLink>
-         <NavLink
+         {/* <NavLink
           to="/users"
           className={({ isActive }) =>
             `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
             }`
           }>
           <FaUsers /> User
-        </NavLink>
+        </NavLink> */}
          <NavLink
           to="/testimonials"
           className={({ isActive }) =>

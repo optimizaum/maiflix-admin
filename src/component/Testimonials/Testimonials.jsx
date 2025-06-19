@@ -6,18 +6,12 @@ import { MyContext } from '../../context/MyContext';
 import axios from 'axios';
 const Testimonials = () => {
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(3);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [popupOpen, setPopupOpen] = useState(false);
     const { setSelectedTestimonialId, selectedTestimonialId } = useContext(MyContext);
     const { alltestimonials, fetchTestimonials } = useContext(MyContext)
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-    const testimonialData = [
-        { id: 1, name: 'Akash', message: 'It is my testimonial 1' },
-        { id: 2, name: 'Riya', description: 'It is my testimonial 2' },
-        { id: 3, name: 'Aman', description: 'It is my testimonial 3' },
-        { id: 4, name: 'Neha', description: 'It is my testimonial 4' },
-    ];
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -28,9 +22,27 @@ const Testimonials = () => {
         setPage(0);
     };
 
-    const handleDelete = (id) => {
-        alert(`Deleted testimonial with id: ${id}`);
+    const handleDelete = async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${API_BASE_URL}admin/testimonial/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (response.status === 200) {
+                alert("Deleted Successfully!");
+                fetchTestimonials(); // Refresh list after deletion
+            } else {
+                alert("Failed to delete. Please try again.");
+            }
+        } catch (error) {
+            console.error("Feedback Deleted Error", error);
+            alert("An error occurred while deleting.");
+        }
     };
+
 
     const handleViewDetails = (id) => {
         setSelectedTestimonialId(id);
@@ -63,10 +75,12 @@ const Testimonials = () => {
         }
     };
 
+    // ---------delete api integration------------------
+
     return (
         <div className="container mx-auto p-4">
             <div className="flex flex-wrap items-center justify-between mb-4">
-                <h1 className="text-xl font-bold">Testimonials</h1>
+                <h1 className="text-xl font-bold">Your Feedback</h1>
             </div>
 
             <div className="shadow-md rounded-xl overflow-x-auto bg-white">
@@ -74,7 +88,8 @@ const Testimonials = () => {
                     <thead className="bg-gray-200">
                         <tr>
                             <th className="py-3 px-4 border border-gray-300">SR No</th>
-                            <th className="py-3 px-4 border border-gray-300">User Number</th>
+                            <th className="py-3 px-4 border border-gray-300">Name</th>
+                            <th className="py-3 px-4 border border-gray-300">Contact Number</th>
                             <th className="py-3 px-4 border border-gray-300">Description</th>
                             <th className="py-3 px-4 border border-gray-300">Status</th>
                             <th className="py-3 px-4 border border-gray-300 text-center">Action</th>
@@ -89,10 +104,16 @@ const Testimonials = () => {
                                         {page * rowsPerPage + index + 1}
                                     </td>
                                     <td className="py-2 px-4 border border-gray-300 text-center">
+                                        {testimonial?.userId?.name}
+                                    </td>
+                                    <td className="py-2 px-4 border border-gray-300 text-center">
                                         {testimonial?.userId?.mobileNumber}
                                     </td>
                                     <td className="py-2 px-4 border border-gray-300 text-center">
-                                        {testimonial.message}
+                                        {testimonial.message &&
+                                            (testimonial.message.length > 60
+                                                ? testimonial.message.slice(0, 60) + "..."
+                                                : testimonial.message)}
                                     </td>
                                     <td className="py-2 border border-gray-300 px-2 text-center font-medium">
                                         {(testimonial.isApproved === true || testimonial.isApproved === "Approved") && (
@@ -112,13 +133,13 @@ const Testimonials = () => {
                                         <div className="flex justify-center gap-4 text-lg text-gray-700">
                                             <button
                                                 onClick={() => handleViewDetails(testimonial._id)}
-                                                className="hover:text-blue-600 cursor-pointer"
+                                                className="hover:text-orange-700 cursor-pointer"
                                                 title="View Details"
                                             >
                                                 <FaEye />
                                             </button>
                                             <button
-                                                onClick={() => handleDelete(testimonial.id)}
+                                                onClick={() => handleDelete(testimonial._id)}
                                                 className="hover:text-red-600"
                                                 title="Delete"
                                             >
@@ -136,7 +157,7 @@ const Testimonials = () => {
             <div className="fixed bottom-0 w-full bg-gray-200 shadow-md flex justify-center">
                 <TablePagination
                     component="div"
-                    // count={testimonialData.length}
+                    count={alltestimonials.length}
                     page={page}
                     onPageChange={handleChangePage}
                     rowsPerPage={rowsPerPage}

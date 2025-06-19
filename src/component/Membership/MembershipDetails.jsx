@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { MyContext } from '../../context/MyContext';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const MembershipDetails = ({ handleStatusChange }) => {
-    const { selectedMemberId } = useContext(MyContext);
+    const { API_BASE_URL,selectedMemberId } = useContext(MyContext);
     const [singleMembership, setSingleMembership] = useState(null);
 
     useEffect(() => {
@@ -54,7 +54,7 @@ const MembershipDetails = ({ handleStatusChange }) => {
                         <li className='text-center'>
                             <strong>Payment Screenshot:</strong>
                             <img
-                                src={`http://localhost:3000/api/v1/uploads/${singleMembership.paymentScreenShot}`}
+                                src={`${API_BASE_URL}uploads/${singleMembership.paymentScreenShot}`}
                                 alt="Payment Screenshot"
                                 className="h-auto rounded shadow-md items-center"
                             />
@@ -65,13 +65,13 @@ const MembershipDetails = ({ handleStatusChange }) => {
             </ul>
             <div className="mt-4 flex justify-between">
                 <button
-                    className="px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm"
+                    className="px-4 py-2 font-semibold bg-green-600 cursor-pointer text-white rounded hover:bg-green-700 text-sm"
                     onClick={() => handleStatusChange(selectedMemberId, "Approved")}
                 >
                     Approve
                 </button>
                 <button
-                    className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
+                    className="px-4 py-2 bg-red-600 font-semibold cursor-pointer text-white rounded hover:bg-red-700 text-sm"
                     onClick={() => handleStatusChange(selectedMemberId, "Rejected")}
                 >
                     Reject

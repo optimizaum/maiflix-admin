@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import { MyContext } from '../../context/MyContext';
 import axios from 'axios';
 
-const TestimonialsPopup = ({ onClose,handleStatusChange }) => {
+const TestimonialsPopup = ({ onClose, handleStatusChange }) => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const { selectedTestimonialId } = useContext(MyContext);
 
@@ -34,22 +34,23 @@ const TestimonialsPopup = ({ onClose,handleStatusChange }) => {
             <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
                 <button
                     onClick={onClose}
-                    className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+                    className="absolute top-2 right-2 cursor-pointer font-bold  text-gray-500 hover:text-red-600 text-xl"
                 >
-                    <RxCross2 />
+                    <RxCross2  className='font-bold'/>
                 </button>
 
                 <h2 className="text-xl font-bold mb-4">Testimonial Details</h2>
 
                 {singleTestimonial ? (
                     <>
+                        <p><strong>Name:</strong> {singleTestimonial?.userId?.name || "N/A"}</p>
                         <p><strong>Mobile Number:</strong> {singleTestimonial?.userId?.mobileNumber || "N/A"}</p>
                         {/* <p><strong>Email:</strong> {singleTestimonial?.userId?.email || "N/A"}</p> */}
                         <p><strong>Description:</strong> {singleTestimonial?.message || "No message"}</p>
 
                         <div className="mt-4 flex justify-between">
                             <button
-                                className="px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm"
+                                className=" ml-auto px-4 py-2 font-semibold text-md  bg-green-600 text-white rounded hover:bg-green-700 "
                                 onClick={() => handleStatusChange(selectedTestimonialId, "Approved")}
                             >
                                 Approve
@@ -57,7 +58,7 @@ const TestimonialsPopup = ({ onClose,handleStatusChange }) => {
                             {/* <button
                                 className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
                                 onClick={() => handleStatusChange(singleTestimonial._id, "Rejected")}
-                            >
+                            >lg
                                 Reject
                             </button> */}
                         </div>

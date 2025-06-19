@@ -68,12 +68,12 @@ const Membership = () => {
                 <div className="shadow-md rounded-xl overflow-auto">
                     <table className="w-full border-collapse">
                         <thead className="bg-gray-300">
-                            <tr className="border border-gray-300">
+                            <tr className="border border-gray-400">
                                 {[
                                     "Sr.No", "Name", "Contact Number", "Email ID", "Address",
                                     "MemberShip Plan", "MemberShip Price", "Status", "Action"
                                 ].map((header, i) => (
-                                    <th key={i} className="py-2 px-2 text-center text-sm border border-gray-300 font-bold text-gray-600 tracking-wider">
+                                    <th key={i} className="py-4 px-2 text-center text-md border border-gray-400 font-bold  tracking-wider">
                                         {header}
                                     </th>
                                 ))}
@@ -82,19 +82,19 @@ const Membership = () => {
                         <tbody>
                             {localMembership && localMembership.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((memberShip, index) => (
                                 <tr key={memberShip._id} className="border border-gray-300 text-sm text-center">
-                                    <td className="py-2 border border-gray-300 px-2">{page * rowsPerPage + index + 1}</td>
-                                    <td className="py-2 border border-gray-300 px-2">{memberShip.name}</td>
-                                    <td className="py-2 border border-gray-300 px-2">{memberShip.mobileNumber}</td>
-                                    <td className="py-2 border border-gray-300 px-2">{memberShip.email}</td>
-                                    <td className="py-2 border border-gray-300 px-2">{memberShip.address?.addressLine1 || "N/A"}</td>
-                                    <td className="py-2 border border-gray-300 px-2">{memberShip.membershipPlan}</td>
-                                    <td className="py-2 border border-gray-300 px-2">{memberShip.memberShipPrice}</td>
-                                    <td className="py-2 border border-gray-300 px-2 font-medium">
+                                    <td className="py-2 border border-gray-400 px-2">{page * rowsPerPage + index + 1}</td>
+                                    <td className="py-2 border border-gray-400 px-2">{memberShip.name}</td>
+                                    <td className="py-2 border border-gray-400 px-2">{memberShip.mobileNumber}</td>
+                                    <td className="py-2 border border-gray-400 px-2">{memberShip.email}</td>
+                                    <td className="py-2 border border-gray-400 px-2">{memberShip.address?.addressLine1 || "N/A"}</td>
+                                    <td className="py-2 border border-gray-400 px-2">{memberShip.membershipPlan}</td>
+                                    <td className="py-2 border border-gray-400 px-2">{memberShip.memberShipPrice}</td>
+                                    <td className="py-2 border border-gray-400 px-2 font-medium">
                                         {memberShip.approval === "Approved" && <span className="text-green-600">{memberShip.approval}</span>}
                                         {memberShip.approval === "Rejected" && <span className="text-red-600">{memberShip.approval}</span>}
                                         {memberShip.approval === "Pending" && <span className="text-yellow-600">{memberShip.approval}</span>}
                                     </td>
-                                    <td className="py-2 border border-gray-300 px-2">
+                                    <td className="py-2 border border-gray-400 px-2">
                                         <button
                                             onClick={() => handleViewDetails(memberShip._id)}
                                             className="hover:text-blue-600 cursor-pointer"
@@ -128,7 +128,7 @@ const Membership = () => {
                             <h2 className="text-lg font-bold mb-4">Membership Details</h2>
                             <button
                                 onClick={handleClosePopup}
-                                className="absolute top-3 right-3 text-gray-600 hover:text-red-500 z-10"
+                                className="absolute cursor-pointer top-3 right-3 text-gray-600 hover:text-red-500 z-10"
                             >
                                 <RxCross2 size={24} />
                             </button>
