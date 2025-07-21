@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaEye, FaEdit, FaTrash, FaArrowRight } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
-import AddServices from "./AddServices";
-import TablePagination from "@mui/material/TablePagination";
+import { IoEyeSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import { MyContext } from "../../../context/MyContext";
 import axios from "axios";
+import AddServices from "./AddServices";
 import UpdateServices from "./UpdateServices";
-import { IoEyeSharp } from "react-icons/io5";
 
 const Services = () => {
   const {
@@ -16,39 +14,27 @@ const Services = () => {
     setSelectedServices,
     getAllServices,
   } = useContext(MyContext);
+
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   useEffect(() => {
     getAllServices();
   }, []);
-  // console.log("---->", allServices);
+
   const handleDelete = (id) => {
-    const confirm = window.confirm("DO you want to delete ? ");
+    const confirm = window.confirm("Do you want to delete?");
     if (confirm) {
       axios
         .delete(`${API_BASE_URL}/service/delete/service/${id}`, {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         })
-        .then((result) => {
-          console.log(result);
+        .then(() => {
           alert("Deleted Successfully!!!");
           getAllServices();
         })
-        .catch((error) => {
-          console.log(error);
-          alert("Error whlie deleting!!!");
+        .catch(() => {
+          alert("Error while deleting!!!");
         });
     }
   };
@@ -63,19 +49,18 @@ const Services = () => {
     localStorage.setItem("serviceId", id);
     navigate(`/packages`);
   };
-  console.log(selectedServices);
 
   return (
     <>
-      <div className=" p-6 h-screen">
-        <div className=" flex mb-5">
+      <div className="p-6">
+        <div className="flex mb-5">
           <h1 className="text-xl font-bold">Services Details</h1>
         </div>
 
-        <div className=" shadow-md rounded-xl overflow-hidden">
+        <div className="shadow-md rounded-xl overflow-hidden">
           <table className="w-full border-collapse">
             <thead className="bg-gray-300">
-              <tr className="border border-gray-300 ">
+              <tr className="border border-gray-300">
                 <th className="py-4 px-2 text-center text-sm border border-gray-400 font-bold text-gray-600 uppercase tracking-wider">
                   Sr. No
                 </th>
@@ -98,58 +83,45 @@ const Services = () => {
             </thead>
             <tbody>
               {services &&
-                services
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((service, index) => (
-                    <tr key={service.id} className="">
-                      <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        {index + 1}
-                      </td>
-                      <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        {service?.category || "N/A"}
-                      </td>
-                      <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        {service?.userId?.name || "N/A"}
-                      </td>
-                      <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        {service?.userId?.mobileNumber || "N/A"}
-                      </td>
-                      <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        {service?.totalPrice || "N/A"}
-                      </td>
-
-                      <td className="py-2 px-6 border border-gray-300 ">
-                        <div className="flex justify-center space-x-4">
-                          <button
-                            onClick={() =>
-                              navigate("/details", {
-                                state: { id: service?._id },
-                              })
-                            }
-                            className="text-gray-700 hover:text-black cursor-pointer"
-                          >
-                            <IoEyeSharp />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                services.map((service, index) => (
+                  <tr key={service._id}>
+                    <td className="py-2 border border-gray-300 px-6 text-sm text-center">
+                      {index + 1}
+                    </td>
+                    <td className="py-2 border border-gray-300 px-6 text-sm text-center">
+                      {service?.category || "N/A"}
+                    </td>
+                    <td className="py-2 border border-gray-300 px-6 text-sm text-center">
+                      {service?.userId?.name || "N/A"}
+                    </td>
+                    <td className="py-2 border border-gray-300 px-6 text-sm text-center">
+                      {service?.userId?.mobileNumber || "N/A"}
+                    </td>
+                    <td className="py-2 border border-gray-300 px-6 text-sm text-center">
+                      {service?.totalPrice || "N/A"}
+                    </td>
+                    <td className="py-2 px-6 border border-gray-300">
+                      <div className="flex justify-center space-x-4">
+                        <button
+                          onClick={() =>
+                            navigate("/details", {
+                              state: { id: service?._id },
+                            })
+                          }
+                          className="text-gray-700 hover:text-black cursor-pointer"
+                        >
+                          <IoEyeSharp />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
       </div>
-      {/* <div className="fixed bottom-0 w-full bg-gray-200 shadow-md  flex justify-center">
-        <TablePagination
-          component="div"
-          count={allServices.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          className="flex justify-end"
-        />
-      </div> */}
-      {/* --------------- */}
+
+      {/* Modals */}
       {isModalOpen && <AddServices closeModal={() => setIsModalOpen(false)} />}
       {isModalOpen && selectedServices && (
         <UpdateServices
