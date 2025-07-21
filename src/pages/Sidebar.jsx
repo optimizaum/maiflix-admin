@@ -62,17 +62,7 @@ const Sidebar = () => {
           <GrTransaction /> Testimonials
         </NavLink>
 
- <NavLink
-          to="/logout"
-          onClick={handleLogout}
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
-            }`
-          }>
-          <IoMdLogOut /> Logout
-        </NavLink>
-
-        {/* <NavLink
+         <NavLink
           to="/services"
           className={() =>
             `flex items-center gap-3 p-3 rounded-lg ${location.pathname.startsWith("/services") || location.pathname.startsWith("/packages") || location.pathname.startsWith("/slot")
@@ -82,7 +72,19 @@ const Sidebar = () => {
           }
         >
           <GrServices /> Services
-        </NavLink> */}
+        </NavLink>
+
+       <NavLink
+          to="/logout"
+          onClick={handleLogout}
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg ${isActive ? "bg-white text-black" : "hover:bg-white hover:text-black"
+            }`
+          }>
+          <IoMdLogOut /> Logout
+        </NavLink>
+
+       
 
         {/* <NavLink
           to="/bookings"

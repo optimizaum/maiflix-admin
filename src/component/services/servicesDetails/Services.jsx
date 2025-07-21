@@ -6,14 +6,15 @@ import TablePagination from "@mui/material/TablePagination";
 import { MyContext } from "../../../context/MyContext";
 import axios from "axios";
 import UpdateServices from "./UpdateServices";
+import { IoEyeSharp } from "react-icons/io5";
 
 const Services = () => {
   const {
     API_BASE_URL,
-    allServices,
-    getAllServices,
+    services,
     selectedServices,
     setSelectedServices,
+    getAllServices,
   } = useContext(MyContext);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,12 +70,6 @@ const Services = () => {
       <div className=" p-6 h-screen">
         <div className=" flex mb-5">
           <h1 className="text-xl font-bold">Services Details</h1>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="ml-auto bg-[#ce621a] px-3 py-2 rounded-lg text-white font-semibold cursor-pointer"
-          >
-            Add Services
-          </button>
         </div>
 
         <div className=" shadow-md rounded-xl overflow-hidden">
@@ -88,13 +83,13 @@ const Services = () => {
                   Service Name
                 </th>
                 <th className="py-2 px-2 text-center text-sm border border-gray-400 font-bold text-gray-600 uppercase tracking-wider">
-                  Description
+                  User Name
                 </th>
                 <th className="py-2 px-2 text-center text-sm border border-gray-400 font-bold text-gray-600 uppercase tracking-wider">
-                  Image
+                  Mobile Number
                 </th>
                 <th className="py-2 px-2 text-center text-sm border border-gray-400 font-bold text-gray-600 uppercase tracking-wider">
-                  No. of Packages
+                  Price
                 </th>
                 <th className="py-2 px-2 text-center text-sm border border-gray-400 font-bold text-gray-600 uppercase tracking-wider">
                   Action
@@ -102,8 +97,8 @@ const Services = () => {
               </tr>
             </thead>
             <tbody>
-              {allServices &&
-                allServices
+              {services &&
+                services
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((service, index) => (
                     <tr key={service.id} className="">
@@ -111,45 +106,29 @@ const Services = () => {
                         {index + 1}
                       </td>
                       <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        {service?.name ? service?.name : "N/A"}
+                        {service?.category || "N/A"}
                       </td>
                       <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        {service?.description ? service?.description : "N/A"}
+                        {service?.userId?.name || "N/A"}
                       </td>
                       <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        <img
-                          src={`${API_BASE_URL}/uploads/${service?.image}`}
-                          alt="Service"
-                          className="w-10 h-10 rounded-md"
-                        />
+                        {service?.userId?.mobileNumber || "N/A"}
+                      </td>
+                      <td className="py-2 border border-gray-300 px-6 text-sm text-center">
+                        {service?.totalPrice || "N/A"}
                       </td>
 
-                      <td className="py-2 border border-gray-300 px-6 text-sm text-center">
-                        {service?.numberOfPackage
-                          ? service?.numberOfPackage
-                          : "N/A"}
-                      </td>
                       <td className="py-2 px-6 border border-gray-300 ">
                         <div className="flex justify-center space-x-4">
                           <button
-                            className="text-gray-700 hover:text-yellow-700 cursor-pointer"
-                            onClick={() => {
-                              handleUpdate(service?._id);
-                            }}
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            className="text-gray-700 hover:text-red-700 cursor-pointer"
-                            onClick={() => handleDelete(service?._id)}
-                          >
-                            <FaTrash />{" "}
-                          </button>
-                          <button
-                            onClick={() => handlePackage(service?._id)}
+                            onClick={() =>
+                              navigate("/details", {
+                                state: { id: service?._id },
+                              })
+                            }
                             className="text-gray-700 hover:text-black cursor-pointer"
                           >
-                            <FaArrowRight />
+                            <IoEyeSharp />
                           </button>
                         </div>
                       </td>
@@ -159,7 +138,7 @@ const Services = () => {
           </table>
         </div>
       </div>
-      <div className="fixed bottom-0 w-full bg-gray-200 shadow-md  flex justify-center">
+      {/* <div className="fixed bottom-0 w-full bg-gray-200 shadow-md  flex justify-center">
         <TablePagination
           component="div"
           count={allServices.length}
@@ -169,7 +148,7 @@ const Services = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
           className="flex justify-end"
         />
-      </div>
+      </div> */}
       {/* --------------- */}
       {isModalOpen && <AddServices closeModal={() => setIsModalOpen(false)} />}
       {isModalOpen && selectedServices && (

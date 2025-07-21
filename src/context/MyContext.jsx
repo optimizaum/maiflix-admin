@@ -14,36 +14,7 @@ const MyContextProvider = (props) => {
   const [selectedTestimonialId, setSelectedTestimonialId] = useState(null);
   const [alltestimonials, setAllTestimonials] = useState([]);
 
-  const getAllServices = () => {
-    axios
-      .get(`${API_BASE_URL}/service/get-all-service`, {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
-      })
-      .then((result) => {
-        console.log(result);
-        const data = result?.data?.data;
-        setAllServices(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
-  const [singleServices, setSingleServices] = useState({});
-  const getAllSingleServices = (id) => {
-    axios
-      .get(`${API_BASE_URL}/service/single/${id}`, {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
-      })
-      .then((result) => {
-        console.log("this is result", result);
-        const data = result?.data?.data;
-        setSingleServices(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const [allServicePackages, setAllServicePackages] = useState([]);
 
@@ -99,33 +70,27 @@ const MyContextProvider = (props) => {
       console.error("error", error);
     }
   }
-  // -----------------get all testimonials------------------
-  // const [alltestimonial, setAllTestimonials] = useState([])
-  // const fetchTestimonials = async () => {
-  //   try {
-  //     const response = await axios.get(`${API_BASE_URL}admin/all-form`, {
-  //       headers: { Authorization: `${localStorage.getItem("token")}` },
-  //     });
-  //     setmembership(response?.data?.data);
-  //     // console.log("membership response ", response);
-  //   } catch (error) {
-  //     console.error("error", error);
-  //   }
-  // }
+ 
 
-  // ----------------single user membership----------------
-  // const [singleMembership, setsingleMembership] = useState({})
-  // const fetchsingleMembership = async (id) => {
-  //   try {
-  //     const response = await axios.get(`${API_BASE_URL}admin/form/${id}`, {
-  //       headers: { Authorization: `${localStorage.getItem("token")}` },
-  //     });
-  //     setsingleMembership(response?.data?.data);
-  //     console.log("singlemembership response ", response);
-  //   } catch (error) {
-  //     console.error("error", error);
-  //   }
-  // }
+
+
+    const [services,setServices]=useState([])
+    const getAllServices=async(req,res)=>{
+      await axios.get(`${API_BASE_URL}admin/services`,{
+          headers:{
+            Authorization:` Bearer ${localStorage.getItem("token")}`
+          }
+      })
+      .then((response)=>{
+        console.log(response?.data,"fetching detail of all the services")
+        setServices(response?.data?.service)
+
+      })
+      .catch((error)=>{
+             console.log("Error while fetching the  serives:",error)
+      })
+    }
+
 
   const value = {
     API_BASE_URL,
@@ -134,8 +99,7 @@ const MyContextProvider = (props) => {
     navigate,
     allServices,
     getAllServices,
-    singleServices,
-    getAllSingleServices,
+   
 
     allServicePackages,
     getAllServicePackages,
@@ -146,13 +110,14 @@ const MyContextProvider = (props) => {
     fetchTestimonials,
     membership,
     fetchMembership,
-    // singleMembership,
-    // fetchsingleMembership,
+  
 
     setSelectedMemberId,
     selectedMemberId    
     , selectedTestimonialId,
-    setSelectedTestimonialId
+    setSelectedTestimonialId,
+    getAllServices,
+    services
 
 
   };
