@@ -77,6 +77,9 @@ const Services = () => {
                   Price
                 </th>
                 <th className="py-2 px-2 text-center text-sm border border-gray-400 font-bold text-gray-600 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="py-2 px-2 text-center text-sm border border-gray-400 font-bold text-gray-600 uppercase tracking-wider">
                   Action
                 </th>
               </tr>
@@ -99,6 +102,9 @@ const Services = () => {
                     </td>
                     <td className="py-2 border border-gray-300 px-6 text-sm text-center">
                       {service?.totalPrice || "N/A"}
+                    </td>
+                    <td className="py-2 border border-gray-300 px-6 text-sm text-center">
+                      {service?.approval || "Pending"}
                     </td>
                     <td className="py-2 px-6 border border-gray-300">
                       <div className="flex justify-center space-x-4">
