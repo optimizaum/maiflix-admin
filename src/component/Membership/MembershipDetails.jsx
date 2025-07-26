@@ -39,13 +39,13 @@ const MembershipDetails = ({ handleStatusChange }) => {
                         <li><strong>Name:</strong> {singleMembership.name}</li>
                         <li><strong>Contact:</strong> {singleMembership.mobileNumber}</li>
                         <li><strong>Email:</strong> {singleMembership.email}</li>
-                        <li><strong>Address:</strong> {singleMembership.address?.addressLine1}</li>
+                        <li><strong>Locality:</strong> {singleMembership.address?.addressLine1}</li>
                         <li><strong>City:</strong> {singleMembership.address?.city}</li>
-                        <li><strong>Country:</strong> {singleMembership.address?.country}</li>
+                        <li><strong>Location:</strong> {singleMembership.address?.location}</li>
                         <li><strong>PinCode:</strong> {singleMembership.address?.pincode}</li>
-                        <li><strong>State:</strong> {singleMembership.address?.state}</li>
+                        {/* <li><strong>State:</strong> {singleMembership.address?.state}</li> */}
                         <li><strong>Plan:</strong> {singleMembership.membershipPlan}</li>
-                        <li><strong>Price:</strong> {singleMembership.memberShipPrice}</li>
+                        <li><strong>Price:</strong> ₹{singleMembership.memberShipPrice}</li>
                         <li><strong>Transaction ID:</strong> {singleMembership.utr}</li>
                         <li><strong>Status:</strong>    {singleMembership.approval}</li>
 

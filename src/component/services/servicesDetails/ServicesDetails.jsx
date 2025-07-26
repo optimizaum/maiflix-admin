@@ -98,11 +98,11 @@ function ServicesDetails() {
         <DetailItem title="Membership End Date" value={membershipData?.memberShipEndDate ? new Date(membershipData?.memberShipEndDate).toLocaleDateString() : "N/A"} />
 
         <h3 className="text-lg font-semibold text-gray-800 mt-2">Customer Address</h3>
-        <DetailItem title="Address Line" value={membershipData?.address?.addressLine1} />
+        <DetailItem title="Locality" value={membershipData?.address?.addressLine1} />
         <DetailItem title="City" value={membershipData?.address?.city} />
-        <DetailItem title="State" value={membershipData?.address?.state} />
+        <DetailItem title="Location" value={membershipData?.address?.location} />
         <DetailItem title="Pincode" value={membershipData?.address?.pincode} />
-        <DetailItem title="Country" value={membershipData?.address?.country} />
+        {/* <DetailItem title="Country" value={membershipData?.address?.country} /> */}
 
         {data.paymentScreenShot && (
           <div className="mt-4">

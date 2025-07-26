@@ -88,7 +88,7 @@ const Membership = () => {
                                     <td className="py-2 border border-gray-400 px-2">{memberShip.email}</td>
                                     <td className="py-2 border border-gray-400 px-2">{memberShip.address?.addressLine1 || "N/A"}</td>
                                     <td className="py-2 border border-gray-400 px-2">{memberShip.membershipPlan}</td>
-                                    <td className="py-2 border border-gray-400 px-2">{memberShip.memberShipPrice}</td>
+                                    <td className="py-2 border border-gray-400 px-2">₹{memberShip.memberShipPrice}</td>
                                     <td className="py-2 border border-gray-400 px-2 font-medium">
                                         {memberShip.approval === "Approved" && <span className="text-green-600">{memberShip.approval}</span>}
                                         {memberShip.approval === "Rejected" && <span className="text-red-600">{memberShip.approval}</span>}
